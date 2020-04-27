@@ -1,0 +1,33 @@
+{{updateContent()}}
+<h1 class="display-4">Questions</h1>
+<div class="btn-group">
+    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sort by (Coming soon)
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Date</a>
+      <div class="dropdown-divider"></div>
+
+      <a class="dropdown-item" href="#">Topic</a>
+      <div class="dropdown-divider"></div>
+
+      <a class="dropdown-item" href="#">Rating</a>
+    </div>
+  </div>
+<table class="table" *ngFor="let question of _questionsArray">
+    <tr>
+        <td class="text-center" [attr.colspan]="authorized ? '1' : '2'"><b>{{question.title}}</b></td>
+        <td *ngIf="authorized" class="col-2">
+            <input type="button" class="btn btn-primary" [routerLink]="['/create_reply', question._id]" routerLinkActive="active" value="Reply">
+            <input type="button" class="btn btn-warning" value="Delete Question" (click)="deleteQuestion(questionID)">
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2"><b>Q: </b>{{question.contents}}</td>
+    </tr>
+    <tr *ngFor="let reply of question.replies">
+        <td [attr.colspan]="authorized ? '1' : '2'"><b>A: </b><i>{{reply.contents}} - {{reply.username}}</i></td>
+        <td *ngIf="authorized" class="col-2"><input type="button" class="btn btn-danger" (click)="deleteReply({questionID: question._id, replyID: reply._id})" value="Delete Answer"></td>
+    </tr>
+</table>

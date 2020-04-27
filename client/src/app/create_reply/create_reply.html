@@ -1,0 +1,11 @@
+
+<b>Title: </b>{{_title}}<br>
+<b>Question: </b>{{_contents}}<br>
+<b>Date: </b>{{_date | date: 'short'}}<br>
+<br>
+<textarea rows="4" cols="100" [(ngModel)]="_replyContents" name="replyContents">
+
+</textarea>
+<br>
+<input type="submit" class="btn btn-primary" value="Submit Response" (click)=submitReply()>
+

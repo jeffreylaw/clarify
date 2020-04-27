@@ -1,0 +1,31 @@
+<h1>Register</h1>
+<form class="form-inline" *ngIf="!_authorized">
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="password" class="form-control" [(ngModel)]="_secretCode" name="secretCode" placeholder="Password">
+    </div>
+    <input type="button" class="btn btn-primary mb-2" (click)="checkAuthorization()" value="Enter secret code">
+  </form>
+
+<form *ngIf="_authorized">
+    <table class="form-group mx-sm-3 mb-2"> 
+        <tr>
+            <td>Username:</td>
+            <td><input type="text" [(ngModel)]="_username" name="username" required></td>
+        </tr>
+        <tr>
+            <td>First Name:</td>
+            <td><input type="text" [(ngModel)]="_firstName" name="firstName"></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" [(ngModel)]="_password" name="password"></td>
+        </tr>
+        <tr>
+            <td>Confirm Password:</td>
+            <td><input type="password" [(ngModel)]="_passwordConfirm" name="passwordConfirm"></td>
+        </tr>
+    </table>
+    <br>
+    <input type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="createUser()" value="Register">
+</form>
+{{_msg}}

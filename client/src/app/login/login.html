@@ -1,0 +1,16 @@
+<h1 class="display-4">Login</h1>
+<form>
+    <table class="form-group mx-sm-3 mb-2"> 
+        <tr>
+            <td>Username:</td>
+            <td><input type="text" [(ngModel)]="_username" name="username" required></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" [(ngModel)]="_password" name="password" required></td>
+        </tr>
+    </table>
+    <br>
+    <input type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="login()" value="Login">
+</form>
+{{_msg}}

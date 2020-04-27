@@ -1,0 +1,62 @@
+{{updateContent()}}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active">Clarify</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/create_question" routerLinkActive="active">Create a question</a>
+            </li>
+            <li class="nav-item" *ngIf="!token">
+                <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+            </li>
+            <li class="nav-item" *ngIf="!token">
+                <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="token">
+                <a class="nav-link" routerLink="/logout" routerLinkActive="active" (click)="logout()">Logout ({{_username}})</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<router-outlet></router-outlet>
+
+<!-- 
+<br><br><br><br><br><br><br><br>
+
+
+Login name: <input type='text' [(ngModel)]='username'/><br/>
+Password:   <input type='text' [(ngModel)]='password'/><br/>
+<input type='button' value='login' (click)='login()'/>
+<br/><br/>
+Token: {{token}}<br/>
+Message: {{message}}
+<br/><br/> -->
+
+<!-- Gets content for authenticated users only. -->
+<!-- <input type='button' value='Get Secure Message' (click)='getSecureData()'><br/>
+{{secureData}}
+<br/><br/> -->
+
+<!-- Gets content for managers and admins only. -->
+<!-- <input type='button' value='Get Manager Message' (click)='getManagerData()'><br/>
+{{managerData}}<br/>
+<div *ngIf="reqInfo">{{reqInfo.username}}
+    <ul *ngFor='let role of reqInfo.roles'>
+        {{role}}
+    </ul>
+</div>
+<br/><br/> -->
+
+<!-- POSTS data to server but only if logged in. -->
+<!-- <input type='button' value='Post Secure Message' 
+       (click)='postSecureMessage()'><br/>
+       {{msgFromServer}}
+<br/><br/> -->
+
+<!-- Logs user out. -->
+<!-- <input type='button' value='Logout' (click)='logout()'>
+<br/><br/> -->
