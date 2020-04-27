@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+<main role="main" class="container">
+    <div class="starter-template">
+        <a href='/Question/Index'>Questions</a> |
+        <a href='/Question/Create'>Create</a> |
+        <a href='/User/Register'>Register</a> | 
+
+        <!-- Show 'Logout' and user name if authenticated. -->
+        <%if (reqInfo.authenticated) { %>
+
+          <% if (reqInfo.roles.includes("Admin")
+          ||  reqInfo.roles.includes("Manager"))
+            { %>
+            <a href='/User/ManagerArea'>Manager Area</a> | 
+          <% } %>
+          <a href='/User/Logout'>Logout</a> [<%= reqInfo.username %>]
+
+        <!-- 'else' must be in separate section with curly brackets to work. -->
+        <% } else { %>
+          <a href='/User/Login'>Login</a>
+        <% } %>
+
+        <!-- Child view goes here. -->
+        <%- body %>
+    </div>
+</main>
+
+</body>
+</html>

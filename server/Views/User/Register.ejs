@@ -1,0 +1,39 @@
+<% layout('../layouts/mainlayout.ejs') -%>
+<br/>
+<form action="/User/RegisterUser" method="POST">   
+    <table>
+        <tr>
+            <td>User Name: </td>
+            <td><input name="username" type="text"
+                       value="<%= user.username ? user.username : '' %>"></td>
+        </tr>
+        <tr>
+            <td>Email: </td>
+            <td><input name="email" type="text"
+                       value="<%= user.email ? user.email : '' %>"></td>
+        </tr>  
+        <tr>
+            <td>First Name: </td>
+            <td><input name="firstName" type="text"
+                       value="<%= user.firstName ? user.firstName : '' %>"></td>
+        </tr> 
+        <tr>
+            <td>Last Name: </td>
+            <td><input name="lastName" type="text"
+                       value="<%= user.lastName ? user.lastName : '' %>"></td>
+        </tr>                        
+        <tr>
+            <td>Password:</td>
+            <td><input name="password" type="password"></td>
+        </tr>
+        <tr>
+            <td>Password Confirmation:</td>
+            <td><input name="passwordConfirm" type="password"></td>
+        </tr> 
+        <tr>
+            <td></td>
+            <td> <input type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+<%= errorMessage %><br/>

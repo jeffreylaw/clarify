@@ -1,0 +1,20 @@
+<% layout('../layouts/mainlayout.ejs') -%>
+<br/>
+<form action="/User/LoginUser" method="POST">   
+    <table>
+        <tr>
+            <td>Username: </td>
+            <td><input name="username" type="text"
+                       value="<%= user.username ? user.username : '' %>"></td>
+        </tr>  
+        <tr>
+            <td>Password: </td>
+            <td><input name="password" type="password"></td>
+        </tr> 
+        <tr>
+            <td></td>
+            <td> <input type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+<%= errorMessage ? errorMessage : "" %><br/>
