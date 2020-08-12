@@ -1,0 +1,12 @@
+<div class="form my-3">
+    <button class="btn btn-dark mx-auto" *ngIf="!showForm" (click)="showForm = !showForm; checkIfLoggedIn()">Ask a question</button>
+
+    <div *ngIf="showForm">
+        <span class="d-block my-2">Title:<input type="text" style="flex:1" [(ngModel)]="_title" name="title" class="ml-2"></span>
+        <textarea type="text" [(ngModel)]="_contents" name="contents" cols="100" placeholder="Ask a question..."></textarea><br>
+        <input type="button" class="btn btn-primary" value="Create" (click)="createQuestion()">
+        <input type="button" class="btn btn-secondary" value="Hide form" *ngIf="showForm"
+            (click)="showForm = !showForm;">
+        <span class="errorMessage">{{_msg}}</span>
+    </div>
+</div>

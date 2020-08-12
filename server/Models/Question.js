@@ -1,16 +1,37 @@
-var mongoose = require('mongoose')
-const Reply = require('../Models/Reply')
+const mongoose = require('mongoose');
+const User = require('../Models/User');
+const Course = require('../Models/Course');
+const Reply = require('../Models/Reply');
 
-var questionSchema = mongoose.Schema({
-    title: {"type": "String", required: true},
-    contents: {"type": "String", required: true},
-    topic: {"type": "String", required: true},
-    date: {"type": Date, required: true},
-    replies: [Reply.schema],
+
+const questionSchema = mongoose.Schema({
+    title: {
+        type: String,
+        required: true
     },
+    contents: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
+    user: User.schema,
+    course: Course.schema,
+    replies: [Reply.schema]
+},
     {
-        versionKey: false, collection: "questions"
+        versionKey: false, collection: 'questions'
     }
 );
-var Question = mongoose.model('Question', questionSchema);
+
+questionSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+    }
+});
+
+const Question = mongoose.model('Question', questionSchema);
 module.exports = Question;

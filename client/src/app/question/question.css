@@ -1,0 +1,51 @@
+.body {
+    min-height: calc(100vh - 5vh);
+    height: auto;
+    width: auto;
+    background-color: #fafafa;
+    font-family: 'Roboto', sans-serif;
+}
+
+.question-card {
+    color: #000000;
+    padding-top: 30px;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1em;
+}
+
+.question-card-text {
+    color: #414141;
+    margin: 0 auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.card {
+    border: none;
+    margin-bottom: 15px;
+}
+
+.card-body:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.card-text {
+    padding: 0;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+textarea {
+    background-color: #F1F3F7;
+    border: 1px solid grey;
+}

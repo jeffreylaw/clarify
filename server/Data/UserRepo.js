@@ -1,29 +1,59 @@
 const User = require('../Models/User');
 
+
 class UserRepo {
-    UserRepo() {        
+
+    UserRepo() { }
+
+    async allUsers() {
+        let users = await User.find().exec();
+        return users;
+    }
+
+    async getUserByUsername(username) {
+        let user = await User.findOne({ username: username });
+        if (user) {
+            let response = { user: user, errorMessage: '' };
+            return response;
+        } else {
+            return null;
+        }
     }
 
     async getUserByEmail(email) {
-        var user = await User.findOne({email: email});
-        if(user) {
-            let respose = { obj: user, errorMessage:"" }
-            return respose;
-        }
-        else {
+        let user = await User.findOne({ email: email });
+        if (user) {
+            let response = { user: user, errorMessage: '' };
+            return response;
+        } else {
             return null;
         }
     }
 
     async getRolesByUsername(username) {
-        var user = await User.findOne({username: username}, {_id:0, roles:1});
-        if(user.roles) {
+        let user = await User.findOne({ username: username });
+        if (user.roles) {
             return user.roles;
-        }
-        else {
+        } else {
             return [];
         }
-    }    
-}
-module.exports = UserRepo;
+    }
 
+    async promoteUser(username, role) {
+        let response = await User.updateOne(
+            { username: username },
+            { $addToSet: { roles: role } }
+        );
+        return response;
+    }
+
+    async demoteUser(username) {
+        let response = await User.updateOne(
+            { username: username },
+            { $set: { roles: [] } }
+        );
+        return response;
+    }
+}
+
+module.exports = UserRepo;

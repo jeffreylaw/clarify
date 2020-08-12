@@ -1,11 +1,12 @@
+<div class="main">
+    <textarea rows="3" cols="100" [(ngModel)]="_contents" name="contents" >
+    </textarea>
+    <input type="submit" class="btn btn-primary" value="Submit reply" (click)=submitReply()>
+</div>
 
-<b>Title: </b>{{_title}}<br>
-<b>Question: </b>{{_contents}}<br>
-<b>Date: </b>{{_date | date: 'short'}}<br>
-<br>
-<textarea rows="4" cols="100" [(ngModel)]="_replyContents" name="replyContents">
-
-</textarea>
-<br>
-<input type="submit" class="btn btn-primary" value="Submit Response" (click)=submitReply()>
-
+<div *ngIf="_showCoverMessage" class="mt-2 alert alert-danger alert-dismissible fade show w-50 text-center center" role="alert">
+    {{_coverMessage}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>

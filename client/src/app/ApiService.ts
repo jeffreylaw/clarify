@@ -59,7 +59,31 @@ export class ApiService {
                 // Inspect the data to know how to parse it.
                 console.log("POST call successful. Inspect response.", 
                             JSON.stringify(data));
-                data['errorMessage'] = "";
+                if (!data['errorMessage']) {
+                    data['errorMessage'] = '';
+                }
+                callback(data, this._that);    
+            },
+            // An error occurred. Data is not received. 
+            error => {
+                callback({errorMessage:JSON.stringify(error)}, 
+                          this._that)             
+            });
+    }
+
+    putData(route, obj, callback) {
+        let headers = this.getSecureHeader();
+        // This free online service receives post submissions.
+        this.http.put(this.site+route, {obj}, {headers})
+        .subscribe(
+            // Data is received from the post request.
+            (data) => {
+                // Inspect the data to know how to parse it.
+                console.log("PUT call successful. Inspect response.", 
+                            JSON.stringify(data));
+                if (!data['errorMessage']) {
+                    data['errorMessage'] = '';
+                }
                 callback(data, this._that);    
             },
             // An error occurred. Data is not received. 

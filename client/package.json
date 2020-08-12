@@ -1,6 +1,6 @@
 {
-  "name": "myapp",
-  "version": "0.0.0",
+  "name": "clarify",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,8 +19,10 @@
     "@angular/platform-browser": "~8.2.9",
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
+    "@ng-bootstrap/ng-bootstrap": "~5.2.2",
+    "animate.css": "^4.1.0",
     "bootstrap": "^4.4.1",
-    "jquery": "3.5.0",
+    "jquery": "3.5.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

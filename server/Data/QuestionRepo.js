@@ -1,10 +1,12 @@
 const Question = require('../Models/Question');
+const Course = require('../Models/Course');
 const User = require('../Models/User');
-const Reply = require('../Models/Reply')
+const Reply = require('../Models/Reply');
+
 
 class QuestionRepo {
 
-    QuestionRepo() {}
+    QuestionRepo() { }
 
     async allQuestions() {
         let questions = await Question.find().exec();
@@ -24,7 +26,7 @@ class QuestionRepo {
             const result = await questionObj.save();
             let response = {
                 obj: result,
-                errorMessage: ""
+                errorMessage: ''
             };
             return response;
         } catch (error) {
@@ -36,38 +38,94 @@ class QuestionRepo {
         }
     }
 
-    async delete(id) {
-        let deletedItem = await Question.find({_id: id}).remove().exec();
-        return deletedItem;
+    async update(editedObj) {
+        let response = {
+            obj: editedObj,
+            errorMessage: ""
+        };
+        try {
+            var error = await editedObj.validateSync(['contents']);
+            if (error) {
+                response.errorMessage = error.message;
+                return response;
+            }
+            let question = await this.getQuestionByID(editedObj.id);
+            if (question) {
+                let updated = await Question.updateOne(
+                    { _id: editedObj.id }, // Match id.
+                    { $set: { contents: editedObj.contents } });
+
+                if (updated.nModified != 0) {
+                    response.obj = editedObj;
+                    return response;
+                }
+                else {
+                    response.errorMessage =
+                        "An error occurred during the update. The item did not save."
+                };
+                return response;
+            }
+            else {
+                response.errorMessage = "An question with this id cannot be found."
+            };
+            return response;
+        }
+        catch (err) {
+            response.errorMessage = err.message;
+            return response;
+        }
     }
 
-    async getQuestionById(id) {
-        let question = await Question.find({_id: id}).exec();
+    async delete(id) {
+        let response = await Question.deleteOne({ _id: id }).exec();
+        return response;
+    }
+
+    async deleteQuestionsByCourseID(id) {
+        let course = await Course.findOne({ _id: id }).exec();
+        let questions = await Question.find({ course: course }).exec();
+        questions.forEach(question => {
+            question.replies.forEach(async reply => {
+                await Reply.deleteOne({ _id: reply.id }).exec();
+            })
+        })
+        await Question.deleteMany({ course: course }).exec();
+    }
+
+
+    async getQuestionByID(id) {
+        let question = await Question.findOne({ _id: id }).exec();
         return question;
     }
 
-    async reply(reqObj) {
-        // var question = Question.findOne({_id: questionID});
+    async getQuestionsByCourseID(id) {
+        let course = await Course.findOne({ _id: id }).exec();
+        let questions = await Question.find({ course: course }).exec();
+        return questions;
+    }
 
+    async addReplyToQuestion(reqObj) {
+        let reply = await Reply.findOne({ _id: reqObj.replyID }).exec();
         let updated = await Question.updateOne(
             { _id: reqObj.questionID },
-            { $push: { replies: {username: reqObj.username, contents: reqObj.contents }}}
-        )
-        console.log(updated)
-        if (updated.nModified !=0) {
-            return {msg: ""}
+            { $push: { replies: reply } }
+        ).exec();
+
+        if (updated.nModified != 0) {
+            return { obj: reply, errorMessage: '' };
         } else {
-            return {msg: "Error occurred."}
+            return { obj: {}, errorMessage: 'Could not save reply.' };
         }
     }
 
     async deleteReply(reqObj) {
-        let updated = await Question.updateOne(
+        let response = await Question.updateOne(
             { _id: reqObj.questionID },
-            { $pull: { replies: { _id: reqObj.replyID }}}
-        )
-        let questions = await Question.find().exec();
-        return questions;
+            { $pull: { replies: { _id: reqObj.replyID } } }
+        ).exec();
+        console.log(response);
+        return response;
     }
 }
+
 module.exports = QuestionRepo;

@@ -1,23 +1,30 @@
-var express       = require('express');
-var mongoose      = require('mongoose');
-var passport      = require('passport');
-var http          = require('http');
-var path          = require('path');
-var engine        = require('ejs-locals');
-var bodyParser    = require('body-parser');
-var LocalStrategy = require('passport-local').Strategy;
-const DB_URI      = 'mongodb://localhost:27017/testdb';
-let options       = { useNewUrlParser: true  };
+const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const http = require('http');
+const path = require('path');
+const engine = require('ejs-locals');
+const bodyParser = require('body-parser');
+const LocalStrategy = require('passport-local').Strategy;
+const DB_URI = 'mongodb://localhost:27017/testdb';
+
+const app = express();
+
+// Use new MongoDB Node.js drivers
+const options = { useNewUrlParser: true, useUnifiedTopology: true };
+mongoose.set('useCreateIndex', true);
+
 mongoose.connect(DB_URI, options);
 
-var app           = express();
-var cors = require('cors');
+
+// CORS
+const cors = require('cors');
 app.use(cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 
@@ -29,7 +36,7 @@ app.use(require('express-session')({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge:60000 },
+  cookie: { maxAge: 60000 },
   store: new (require('express-sessions'))({
     storage: 'mongodb',
     instance: mongoose,     // optional
@@ -43,16 +50,17 @@ app.use(require('express-session')({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 const User = require('./Models/User');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
- // Enable routing and use port 1337.
+// Enable routing and use port 1337.
 require('./router')(app);
 app.set('port', 1337);
 
- // Set up ejs templating.
+// Set up ejs templating.
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
@@ -64,7 +72,7 @@ app.set('views', path.join(__dirname, 'views'));
 // So if you put a style.css file in that directory and you 
 // could link directly to it in your view <link href=”style.css” rel=”stylesheet”>
 app.use(express.static(path.join(__dirname, 'static')));
- 
-http.createServer(app).listen(app.get('port'), function(){
+
+http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });

@@ -1,0 +1,22 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main input {
+    margin-top: 5px;
+}
+
+textarea {
+    max-width: 90%;
+}
+
+.center {
+    position: relative;    
+    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}

@@ -10,7 +10,6 @@ class RequestService {
 
     async  jwtReqHelper(req, permittedRoles=[]) {
         let rolePermitted = false;
-
         // Send username and login status to view if authenticated.
         if(req.isAuthenticated()) {
             let roles = await _userRepo.getRolesByUsername(req.user.username);

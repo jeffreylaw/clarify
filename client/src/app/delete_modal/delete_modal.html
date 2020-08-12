@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">Delete {{type}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Are you sure you want to delete this {{type}}?</p>
+  <p *ngIf="type === 'course'" class="text-muted">Any questions and their replies will be deleted forever!</p>
+  <p *ngIf="type === 'question'" class="text-muted">All replies to this question will be deleted forever!</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)='deleteCourse(courseID)' *ngIf="type === 'course'" ngbAutofocus>Delete</button>
+  <button type="button" class="btn btn-danger" (click)='deleteQuestion(questionID)' *ngIf="type === 'question'" ngbAutofocus>Delete</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
+

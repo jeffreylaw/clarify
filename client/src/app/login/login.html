@@ -1,16 +1,13 @@
-<h1 class="display-4">Login</h1>
-<form>
-    <table class="form-group mx-sm-3 mb-2"> 
-        <tr>
-            <td>Username:</td>
-            <td><input type="text" [(ngModel)]="_username" name="username" required></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" [(ngModel)]="_password" name="password" required></td>
-        </tr>
-    </table>
-    <br>
-    <input type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="login()" value="Login">
-</form>
-{{_msg}}
+<div class="body">
+    <div class="login-page">
+        <div class="login-form">
+            <form>
+                <h1 class="text-center">Account Login</h1>
+                <input type="text" [(ngModel)]="_username" name="username" placeholder="Username">
+                <input type="password" [(ngModel)]="_password" name="password" placeholder="Password" autocomplete="on">
+                <input type="button" class="btn btn-primary" (click)="login()" value="SIGN IN">
+                <span class="errorMessage">{{_msg}}</span>
+            </form>
+        </div>
+    </div>
+</div>

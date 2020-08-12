@@ -1,0 +1,65 @@
+<div class="body">
+    <div>
+        <h1 class="text-center pt-5">Admin Panel</h1>
+    </div>
+    <div class="main container">
+        <div class="row">
+            <div class="alert alert-danger" role="alert" *ngIf='_showErrorMessage'>
+                {{_msg}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="create-course-form text-center">
+                    <h3>Create a new course</h3>
+                    <form>
+                        <table>
+                            <tr>
+                                <td>Code:</td>
+                                <td><input [(ngModel)]="_code" name="code"></td>
+                            </tr>
+                            <tr>
+                                <td>Name:</td>
+                                <td><input [(ngModel)]="_name" name="name"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Instructor:</td>
+                                <td><input [(ngModel)]="_instructor" name="instructor"></td>
+                            </tr>
+                            <tr>
+                                <td>CRN:</td>
+                                <td><input [(ngModel)]="_crn" name="crn"></td>
+                            </tr>
+                        </table>
+                        <input type="button" class="btn btn-primary" value="Create" (click)="createCourse()">
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <div class="promote-user-form text-center">
+                    <h3>Modify user permissions</h3>
+                    <form>
+                        <label for="users">Select user:</label>
+                        <select name="users" id="users" [(ngModel)]="_selectedUser">
+                            <ng-container *ngFor="let user of _usersArray">
+                                <option *ngIf="!user.roles.includes('admin')" [ngValue]="user">
+                                    {{user.firstName}} {{user.lastName}} - {{user.roles}}
+                                </option>
+                            </ng-container>
+                        </select>
+                        <br>
+                        <label for="role">Select role:</label>
+                        <select name="role" id="role" [(ngModel)]="_selectedRole">
+                            <option *ngFor="let role of _roles" [ngValue]="role.id">
+                                {{role.name}}
+                            </option>
+                        </select>
+                        <br>
+                        <input type="button" class="btn btn-primary" value="Modify" (click)="updateUser()">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

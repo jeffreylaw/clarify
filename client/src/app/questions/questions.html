@@ -1,33 +1,47 @@
-{{updateContent()}}
-<h1 class="display-4">Questions</h1>
-<div class="btn-group">
-    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Sort by (Coming soon)
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Date</a>
-      <div class="dropdown-divider"></div>
+<div *ngIf="_showCoverMessage" class="alert alert-danger alert-dismissible fade show w-50 text-center center"
+  role="alert">
+  {{_coverMessage}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="body">
+  <h1 class='text-center display-4 course-header pt-4'>{{_course?.code}} - {{_course?.name}}</h1>
+  <CreateQuestionComponent (questionCreated)='appendQuestion($event)' [_course]="_course"></CreateQuestionComponent>
 
-      <a class="dropdown-item" href="#">Topic</a>
-      <div class="dropdown-divider"></div>
 
-      <a class="dropdown-item" href="#">Rating</a>
+  <div class='card w-75 border-0 border-none bg-transparent'>
+    <div class="text-right card-text">
+      <button class="btn btn-link card-btn text-center mt-0 mb-2 shadow-none" (click)="open('course', _courseID)"
+        *ngIf="this._sessionRoles?.includes('admin')">Delete course</button>
     </div>
   </div>
-<table class="table" *ngFor="let question of _questionsArray">
-    <tr>
-        <td class="text-center" [attr.colspan]="authorized ? '1' : '2'"><b>{{question.title}}</b></td>
-        <td *ngIf="authorized" class="col-2">
-            <input type="button" class="btn btn-primary" [routerLink]="['/create_reply', question._id]" routerLinkActive="active" value="Reply">
-            <input type="button" class="btn btn-warning" value="Delete Question" (click)="deleteQuestion(questionID)">
-        </td>
 
-    </tr>
-    <tr>
-        <td colspan="2"><b>Q: </b>{{question.contents}}</td>
-    </tr>
-    <tr *ngFor="let reply of question.replies">
-        <td [attr.colspan]="authorized ? '1' : '2'"><b>A: </b><i>{{reply.contents}} - {{reply.username}}</i></td>
-        <td *ngIf="authorized" class="col-2"><input type="button" class="btn btn-danger" (click)="deleteReply({questionID: question._id, replyID: reply._id})" value="Delete Answer"></td>
-    </tr>
-</table>
+
+  <div *ngFor='let question of _questionsArray'>
+    <div class='card w-75 card-border'>
+      <a [routerLink]="['/courses/question', question.id]" class='outer-link'>
+        <h5 class='card-title'>{{question.title}}</h5>
+        <div class='card-body'>
+          <!-- <p class='card-text'>{{question.contents}}</p> -->
+          <p class='card-text text-right text-muted mb-0 mt-0'>Posted by {{question.user.username}}
+            {{question.date | date: 'medium'}}</p>
+
+          <p class='text-right mb-0 mt-0 delete-btn'>
+
+            <button class="btn btn-link card-btn"
+              (click)="openEdit(question.id); $event.stopPropagation(); $event.preventDefault();"
+              *ngIf="question.user.username === this._sessionUsername || this._sessionRoles?.includes('admin') || this._sessionRoles?.includes('instructor')">Edit
+              question</button>
+
+            <button class="btn btn-link card-btn"
+              (click)="open('question', question.id); $event.stopPropagation(); $event.preventDefault();"
+              *ngIf="question.user.username === this._sessionUsername || this._sessionRoles?.includes('admin') || this._sessionRoles?.includes('instructor')">Delete
+              question</button>
+
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

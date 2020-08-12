@@ -1,0 +1,13 @@
+.body {
+    min-height: calc(100vh - 5vh);
+    height: auto;
+    background-color: #F1F3F7;
+    font-size: 22px;
+}
+
+.course-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2em;
+    color: #373760;
+    text-decoration: none;
+}

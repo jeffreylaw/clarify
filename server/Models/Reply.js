@@ -1,12 +1,30 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const User = require('../Models/User');
+const Question = require('../Models/Question');
 
-var replySchema = mongoose.Schema({
-    username: {"type": "String", required: true},
-    contents: {"type": "String", required: true},
+
+const replySchema = mongoose.Schema({
+    user: User.schema,
+    contents: {
+        type: String,
+        required: true
     },
+    date: {
+        type: Date,
+        required: true
+    },
+},
     {
-        versionKey: false,
+        versionKey: false, collection: 'replies'
     }
 );
-var Reply = mongoose.model('Reply', replySchema);
+
+replySchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+    }
+})
+
+const Reply = mongoose.model('Reply', replySchema);
 module.exports = Reply;

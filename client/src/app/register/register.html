@@ -1,31 +1,31 @@
-<h1>Register</h1>
-<form class="form-inline" *ngIf="!_authorized">
-    <div class="form-group mx-sm-3 mb-2">
-        <input type="password" class="form-control" [(ngModel)]="_secretCode" name="secretCode" placeholder="Password">
+<div class="body">
+    <div class="register-page">
+        <div class="register-form">
+            <form>
+                <h1 class="text-center">Register</h1>
+                <div class="form-field">
+                    <label for="username">Username</label>
+                    <input type="text" [(ngModel)]="_username" name="username">
+                </div>
+                <div class="form-field">
+                    <label for="firstName">First name</label>
+                    <input type="text" [(ngModel)]="_firstName" name="firstName">
+                </div>
+                <div class="form-field">
+                    <label for="lastName">Last name</label>
+                    <input type="text" [(ngModel)]="_lastName" name="lastName">
+                </div>
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input type="password" [(ngModel)]="_password" name="password">
+                </div>
+                <div class="form-field">
+                    <label for="">Confirm password</label>
+                    <input type="password" [(ngModel)]="_passwordConfirm" name="passwordConfirm">
+                </div>
+                <input type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="createUser()" value="REGISTER">
+                <span class="errorMessage">{{_msg}}</span>
+            </form>
+        </div>
     </div>
-    <input type="button" class="btn btn-primary mb-2" (click)="checkAuthorization()" value="Enter secret code">
-  </form>
-
-<form *ngIf="_authorized">
-    <table class="form-group mx-sm-3 mb-2"> 
-        <tr>
-            <td>Username:</td>
-            <td><input type="text" [(ngModel)]="_username" name="username" required></td>
-        </tr>
-        <tr>
-            <td>First Name:</td>
-            <td><input type="text" [(ngModel)]="_firstName" name="firstName"></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" [(ngModel)]="_password" name="password"></td>
-        </tr>
-        <tr>
-            <td>Confirm Password:</td>
-            <td><input type="password" [(ngModel)]="_passwordConfirm" name="passwordConfirm"></td>
-        </tr>
-    </table>
-    <br>
-    <input type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="createUser()" value="Register">
-</form>
-{{_msg}}
+</div>

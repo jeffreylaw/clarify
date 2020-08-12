@@ -1,20 +1,97 @@
-table {
-    border: 1px solid #D3D3D3;
-    border-radius: 10px;
-    width: 60%;
-    margin: auto;
-    margin-top: 10px;
-    border-collapse: separate; 
+.body {
+    min-height: calc(100vh - 5vh);
+    height: auto;
+    background-color: #F1F3F7;
+    font-family: 'Roboto', sans-serif;
 }
 
-.table td, .table th {
-    border: none;
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2em;
+    color: #373760;
 }
 
-.col-2 {
-    width: 268px;
+.delete-btn {
+    position: relative;
+    right:0;
 }
 
-input[type=button] {
-    margin: 5px;
+.card {
+    background-color: #F1F3F7;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: 1px solid #989fc38a;
+    border-radius: 0.25em;
+}
+
+.outer-link {
+    color: #000000;
+    text-decoration: none;
+}
+
+.outer-link:hover {
+    border: 1px solid #858baa8a;
+    border-radius: .25rem;
+}
+
+.card-title {
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card-body {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+}
+
+.card-text {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.card-btn {
+    padding: 0 5px;
+    margin: 0;
+}
+
+.center {
+    position: fixed;    
+    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.btn-warning {
+    background-color: #FF8C00;
+    border-color: #FF8C00;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #df7a00 !important;
+    border-color: #df7a00 !important;
+    color: white !important;
+}
+
+.btn-warning:active {
+    background-color: #df7a00 !important;
+    border-color: #df7a00 !important;
+    color: white !important;
+}
+
+
+.btn-warning:focus {
+    background-color: #df7a00 !important;
+    border-color: #df7a00 !important;
+    color: white !important;
+}
+
+.btn-icon {
+    padding: 2px;
 }
