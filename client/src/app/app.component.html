@@ -10,13 +10,13 @@
             <li class="nav-item" *ngIf="_roles && _roles.includes('admin')">
                 <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Panel</a>
             </li>
-            <li class="nav-item" *ngIf="!isLoggedIn || !token">
+            <li class="nav-item" *ngIf="!isLoggedIn && !token">
                 <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
             </li>
-            <li class="nav-item" *ngIf="!isLoggedIn || !token">
+            <li class="nav-item" *ngIf="!isLoggedIn && !token">
                 <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
             </li>
-            <li class="nav-item" *ngIf="isLoggedIn || token">
+            <li class="nav-item" *ngIf="token">
                 <a class="nav-link" routerLink="/logout" routerLinkActive="active" (click)="logout()">Logout ({{_username}})</a>
             </li>
         </ul>

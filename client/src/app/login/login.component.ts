@@ -40,8 +40,10 @@ export class LoginComponent {
             let replyRoute = /^\/courses\/question\/\w*/
             let questionRoute = /^\/courses\/w*/
             if (replyRoute.test(this.routeEventsService.previousRoutePath.value)) {
+                this.auth.isLoggedIn = true;
                 this.router.navigate([this.routeEventsService.previousRoutePath.value]);
             } else if (questionRoute.test(this.routeEventsService.previousRoutePath.value)) {
+                this.auth.isLoggedIn = true;
                 this.router.navigate([this.routeEventsService.previousRoutePath.value]);
             } else {
                 this.auth.isLoggedIn = true;
