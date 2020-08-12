@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     templateUrl:'./question.html',
-    styleUrls: ['/question.css']
+    styleUrls: ['./question.css']
 })
 export class QuestionComponent {
     _apiService;
