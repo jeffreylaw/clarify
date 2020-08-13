@@ -39,6 +39,7 @@ export class AppComponent {
         this.router.events.subscribe(event => {
             console.log('ever run')
             if (event.constructor.name === 'NavigationEnd' || event.constructor.name === 'NavigationStart') {
+                console.log('okay budy...')
                 this.isLoggedIn = this.auth.isLoggedIn;
                 console.log('isLoggedIn', this.isLoggedIn)
                 if (this.isLoggedIn) {
