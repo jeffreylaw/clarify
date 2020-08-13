@@ -7,6 +7,7 @@ const _questionRepo = new QuestionRepo();
 const ReplyRepo = require('../Data/ReplyRepo');
 const _replyRepo = new ReplyRepo();
 
+/* Get all courses */
 exports.Index = async function (req, res) {
     let courses = await _courseRepo.allCourses();
     if (courses) {
@@ -16,6 +17,7 @@ exports.Index = async function (req, res) {
     }
 }
 
+/* Get course details */
 exports.Details = async function (req, res) {
     let courseID = req.params.id;
     let course = await _courseRepo.getCourseByID(courseID);
@@ -26,19 +28,20 @@ exports.Details = async function (req, res) {
     }
 }
 
+/* Create a new course */
 exports.CreateCourse = async function (req, res) {
     let reqInfo = await RequestService.jwtReqHelper(req, ['instructor', 'admin']);
     if (reqInfo.rolePermitted) {
         let code = req.body.obj.code;
         let name = req.body.obj.name;
         let instructor = req.body.obj.instructor;
-        let crn = req.body.obj.crn;
+        let semester = req.body.obj.semester;
     
         let tempCourseObj = new Course( {
             'code': code,
             'name': name,
             'instructor': instructor,
-            'crn': crn,
+            'semester': semester,
         });
         let responseObj = await _courseRepo.create(tempCourseObj);
         if (responseObj.errorMessage === '') {
@@ -51,6 +54,7 @@ exports.CreateCourse = async function (req, res) {
     }
 }
 
+/* Delete a course */
 exports.DeleteCourse = async function (req, res) {
     let reqInfo = await RequestService.jwtReqHelper(req, ['instructor', 'admin']);
     if (reqInfo.rolePermitted) {

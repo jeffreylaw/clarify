@@ -33,11 +33,9 @@ exports.QuestionsByCourse = async function (req, res) {
     }
 }
 
-
+/* Update question */
 exports.UpdateQuestion = async function (req, res) {
     let questionID = req.body.obj.questionID;
-    console.log(questionID)
-    console.log(req.body.obj.contents)
     let tempQuestionObj = new Question({
         _id: questionID,
         contents: req.body.obj.contents
@@ -76,7 +74,6 @@ exports.CreateQuestion = async function (req, res) {
             'user': user,
         });
         let responseObj = await _questionRepo.create(tempQuestionObj);
-        console.log(responseObj);
         if (responseObj.errorMessage === '') {
             res.json({ question: responseObj.obj, errorMessage: '' })
         } else {
@@ -101,7 +98,6 @@ exports.Reply = async function (req, res) {
         })
         let replyRepoResponse = await _replyRepo.create(tempReplyObj);
         let responseObj = await _questionRepo.addReplyToQuestion({ questionID: questionID, replyID: replyRepoResponse.obj._id });
-        console.log(responseObj)
         if (responseObj.errorMessage === '') {
             res.json({ reply: responseObj.obj, errorMessage: '' })
         } else {
@@ -120,7 +116,6 @@ exports.DeleteQuestion = async function (req, res) {
         if (reqInfo.roles.includes('admin') || reqInfo.roles.includes('instructor')) {
             await _replyRepo.deleteRepliesByQuestionID(questionID);
             let response = await _questionRepo.delete(questionID);
-            console.log('response', response);
             return res.json({ errorMessage: '', response: response });
         }
 
@@ -128,7 +123,6 @@ exports.DeleteQuestion = async function (req, res) {
         if (question.user.username === reqInfo.username) {
             await _replyRepo.deleteRepliesByQuestionID(questionID);
             let response = await _questionRepo.delete(questionID);
-            console.log('response', response);
             return res.json({ errorMessage: '', response: response });
         } else {
             return res.json({ errorMessage: 'You can only delete questions you authored.' });
@@ -140,21 +134,21 @@ exports.DeleteQuestion = async function (req, res) {
 
 /* Delete reply to question */
 exports.DeleteReply = async function (req, res) {
-    let reqInfo = await RequestService.jwtReqHelper(req, ['instructor', 'admin']);
+    let reqInfo = await RequestService.jwtReqHelper(req, ['instructor', 'admin', 'mod']);
     if (reqInfo.authenticated) {
         let questionID = req.body.obj.questionID;
         let replyID = req.body.obj.replyID;
 
-        if (reqInfo.roles.includes('admin') || reqInfo.roles.includes('instructor')) {
+        if (reqInfo.roles.includes('admin') || reqInfo.roles.includes('instructor') || reqInfo.roles.includes('mod')) {
             let response = await _questionRepo.deleteReply({ questionID: questionID, replyID: replyID })
-            console.log('response', response);
+            await _replyRepo.delete(replyID);
             return res.json({ errorMessage: '', response: response });
         }
 
         let reply = await Reply.findOne({ _id: replyID }).exec();
         if (reply.user.username === reqInfo.username) {
             let response = await _questionRepo.deleteReply({ questionID: questionID, replyID: replyID })
-            console.log('response', response);
+            await _replyRepo.delete(replyID);
             return res.json({ errorMessage: '', response: response });
         } else {
             return res.json({ errorMessage: 'You can only delete posts you authored.' });

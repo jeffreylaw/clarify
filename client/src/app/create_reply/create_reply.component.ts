@@ -42,7 +42,6 @@ export class CreateReplyComponent {
     }
 
     postCallback(result, _this) {
-        console.log(result)
         if (result.reply) {
             _this.clearReplyForm();
             _this.replyCreated.emit(result.reply);

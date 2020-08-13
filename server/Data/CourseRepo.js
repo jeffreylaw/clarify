@@ -44,12 +44,6 @@ class CourseRepo {
         let course = await Course.findOne({ _id: id}).exec();
         return course;
     }
-
-    // async update(id, update) {
-    //     let updatedCourse = await Course.findOneAndUpdate({ _id: id }, update).exec();
-    //     return updatedCourse;
-    // }
-
 }
 
 module.exports = CourseRepo;

@@ -13,7 +13,7 @@ const courseSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    crn: {
+    semester: {
         type: String,
         required: true
     },

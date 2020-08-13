@@ -37,12 +37,8 @@ export class AppComponent {
 
     ngOnInit() {
         this.router.events.subscribe(event => {
-            console.log('ever run')
-            console.log('auth', this.auth.isLoggedIn);
             if (event.constructor.name === 'NavigationEnd' || event.constructor.name === 'NavigationStart') {
-                console.log('okay budy...')
                 this.isLoggedIn = this.auth.isLoggedIn;
-                console.log('isLoggedIn', this.isLoggedIn)
                 if (this.isLoggedIn) {
                     this.updateContent();
                 }
@@ -58,7 +54,6 @@ export class AppComponent {
     // Either shows content when logged in or clears contents.
     //------------------------------------------------------------
     updateContent() {
-        console.log('Updated')
         // Logged in if token exists in browser cache.
         if(sessionStorage.getItem('auth_token')!=null) {
             this.token   = sessionStorage.getItem('auth_token');
@@ -153,7 +148,6 @@ export class AppComponent {
     // Log user out. Destroy token.
     //------------------------------------------------------------
     logout() {
-        console.log('logout')
         sessionStorage.clear();
         this.updateContent();
         this.auth.isLoggedIn = false;

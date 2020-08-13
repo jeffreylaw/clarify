@@ -71,6 +71,10 @@ export class ApiService {
             });
     }
 
+    //------------------------------------------------------------
+    // Implements PUT request and sends data back to component 
+    // through callback.
+    //------------------------------------------------------------
     putData(route, obj, callback) {
         let headers = this.getSecureHeader();
         // This free online service receives post submissions.

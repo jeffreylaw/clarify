@@ -4,6 +4,7 @@ const RequestService = require('../Services/RequestService');
 const UserRepo = require('../Data/UserRepo');
 const _userRepo = new UserRepo();
 
+/* Get all users */
 exports.AllUsers = async function (req, res) {
     let reqInfo = await RequestService.jwtReqHelper(req, ['admin']);
     if (reqInfo.rolePermitted) {
@@ -16,12 +17,13 @@ exports.AllUsers = async function (req, res) {
     }
 }
 
+/* Register a user */
 exports.Register = async function (req, res) {
     let reqInfo = RequestService.reqHelper(req);
     res.render('User/Register', { errorMessage: "", user: {}, reqInfo: reqInfo })
 };
 
-// Handles 'POST' with registration form submission.
+/* Handles 'POST' with registration form submission. */
 exports.RegisterUser = async function (req, res) {
     let username = req.body.obj.username;
     let password = req.body.obj.password;
@@ -42,7 +44,6 @@ exports.RegisterUser = async function (req, res) {
         User.register(new User(newUser), password,
             function (err, account) {
                 if (err) {
-                    console.log(err)
                     return res.json({ errorMessage: err.message });
                 } else {
                     return res.json({ user: newUser, errorMessage: '' });
@@ -53,6 +54,7 @@ exports.RegisterUser = async function (req, res) {
     }
 };
 
+/* Promote a user */
 exports.Promote = async function (req, res) {
     let reqInfo = await RequestService.jwtReqHelper(req, ['admin']);
     if (reqInfo.rolePermitted) {
@@ -73,6 +75,7 @@ exports.Promote = async function (req, res) {
     }
 }
 
+/* Demote a user */
 exports.Demote = async function (req, res) {
     let reqInfo = await RequestService.jwtReqHelper(req, ['admin']);
     if (reqInfo.rolePermitted) {
@@ -82,7 +85,6 @@ exports.Demote = async function (req, res) {
             return res.json({ errorMessage: 'You can\'t demote admins' });
         }
         let response = await _userRepo.demoteUser(username);
-        console.log(response);
         if (response && response.nModified === 1) {
             return res.json({ errorMessage: '', response: 'Successfully demoted user.'});
         } else {
@@ -122,78 +124,4 @@ exports.Logout = (req, res) => {
         user: {}, isLoggedIn: false, errorMessage: "",
         reqInfo: reqInfo
     });
-};
-
-
-
-// This displays a view called 'securearea' but only 
-// if user is authenticated.
-exports.SecureArea = async function (req, res) {
-    let reqInfo = RequestService.reqHelper(req);
-
-    if (reqInfo.authenticated) {
-        res.render('User/SecureArea', { errorMessage: "", reqInfo: reqInfo })
-    }
-    else {
-        res.redirect('/User/Login?errorMessage=You ' +
-            'must be logged in to view this page.')
-    }
-}
-
-// This displays a view called 'securearea' but only 
-// if user is authenticated.
-exports.ManagerArea = async function (req, res) {
-    let reqInfo = RequestService.reqHelper(req, ['Admin', 'Manager']);
-
-    if (reqInfo.rolePermitted) {
-        res.render('User/ManagerArea', { errorMessage: "", reqInfo: reqInfo })
-    }
-    else {
-        res.redirect('/User/Login?errorMessage=You ' +
-            'must be logged in with proper permissions to view this page.')
-    }
-}
-
-// This function returns data to authenticated users only.
-exports.SecureAreaJwt = async function (req, res) {
-    let reqInfo = await RequestService.jwtReqHelper(req);
-
-    if (reqInfo.authenticated) {
-        res.json({
-            errorMessage: "", reqInfo: reqInfo,
-            secureData: "Congratulations! You are authenticated and you have "
-                + "successfully accessed this message."
-        })
-    }
-    else {
-        res.json({
-            errorMessage: '/User/Login?errorMessage=You ' +
-                'must be logged in to view this page.'
-        })
-    }
-}
-
-// This function returns data to logged in managers only.
-exports.ManagerAreaJwt = async function (req, res) {
-    let reqInfo = await RequestService.jwtReqHelper(req, ['Admin', 'Manager']);
-
-    if (reqInfo.rolePermitted) {
-        res.json({ errorMessage: "", reqInfo: reqInfo })
-    }
-    else {
-        res.json({
-            errorMessage: 'You must be logged in with proper ' +
-                'permissions to view this page.'
-        });
-    }
-}
-
-// This function receives a post from logged in users only.
-exports.PostAreaJwt = async function (req, res) {
-    let reqInfo = await RequestService.jwtReqHelper(req, []);
-    console.log(req.body.obj.msgFromClient);
-    res.json({
-        errorMessage: "", reqInfo: reqInfo,
-        msgFromServer: "Hi from server"
-    })
 };

@@ -29,7 +29,6 @@ export class LoginComponent {
             username: this._username.trim(),
             password: this._password.trim(),
         }).subscribe((data) => {
-            console.log(data);
             if (data['token'] != null) {
                 sessionStorage.setItem('auth_token', data['token']);
             }
@@ -49,7 +48,6 @@ export class LoginComponent {
                 this.auth.isLoggedIn = true;
                 this.router.navigate(['/']);
             }
-            console.log('auth', this.auth.isLoggedIn);
         },
         error => {
             this._msg = 'Could not login, please try again.'

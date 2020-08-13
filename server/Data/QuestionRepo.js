@@ -52,7 +52,7 @@ class QuestionRepo {
             let question = await this.getQuestionByID(editedObj.id);
             if (question) {
                 let updated = await Question.updateOne(
-                    { _id: editedObj.id }, // Match id.
+                    { _id: editedObj.id },
                     { $set: { contents: editedObj.contents } });
 
                 if (updated.nModified != 0) {
@@ -123,7 +123,6 @@ class QuestionRepo {
             { _id: reqObj.questionID },
             { $pull: { replies: { _id: reqObj.replyID } } }
         ).exec();
-        console.log(response);
         return response;
     }
 }

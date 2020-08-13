@@ -19,7 +19,6 @@ export class CoursesComponent {
     }
 
     ngOnChanges() {
-        console.log('test')
         this._sessionRoles = JSON.parse(sessionStorage.getItem('roles'));
     }
 

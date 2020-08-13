@@ -6,7 +6,6 @@
     <p class="text-muted text-right mr-2">
         Course: {{_question?.course.code}}<br>
         Asked by: {{_question?.user?.username}} &bull; {{_question?.date | date: 'medium'}}
-
     </p>    
 
     <div class="card">
@@ -23,9 +22,3 @@
     </div>
     <CreateReplyComponent [_questionID]="_questionID" (replyCreated)="appendReply($event)"></CreateReplyComponent>
 </div>
-
-        <!-- <tr *ngIf="reply.user.username === this._sessionUsername || this._sessionRoles?.includes('admin') || this._sessionRoles?.includes('instructor')">
-            <td><a href="" onclick="return false;" (click)="deleteReply(reply.id)">Delete Reply</a></td>
-        </tr> -->
-
-        <!-- {{_msg}} -->

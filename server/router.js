@@ -8,17 +8,14 @@ const cors           = require('cors');
 
 // Routes
 module.exports = function(app){  
-    // Main Routes
+    // Routes for backend
     app.get('/',      HomeController.Index);
-
     app.get('/User/Register', UserController.Register);
-    app.post('/User/RegisterUser', UserController.RegisterUser);
     app.get('/User/Login', UserController.Login);
     app.post('/User/LoginUser', UserController.LoginUser);
     app.get('/User/Logout', UserController.Logout);
-    app.post('/User/Promote', UserController.Promote);
-    // app.get('/User/SecureArea', UserController.SecureArea);
-    // app.get('/User/ManagerArea', UserController.ManagerArea);
+    
+    // Routes for frontend 
 
     // Sign in
     app.post(
@@ -27,8 +24,9 @@ module.exports = function(app){
         authMiddleware.signIn,
         authMiddleware.signJWTForUser
     )
+    app.post('/User/RegisterUser', UserController.RegisterUser);
+    app.post('/User/Promote', UserController.Promote);
     
-    // Courses
     app.get('/Course', cors(), CourseController.Index);
     app.get('/Course/:id', cors(), CourseController.Details);
     app.get('/Course/Questions/:id', cors(), QuestionController.QuestionsByCourse);
@@ -42,18 +40,7 @@ module.exports = function(app){
     app.post('/Question/Reply', cors(), authMiddleware.requireJWT, QuestionController.Reply);
     app.post('/Question/DeleteReply', cors(), authMiddleware.requireJWT, QuestionController.DeleteReply)
 
-
     app.get('/Users', cors(), authMiddleware.requireJWT, UserController.AllUsers);
     app.post('/Users/Promote', cors(), authMiddleware.requireJWT, UserController.Promote);
     app.post('/Users/Demote', cors(), authMiddleware.requireJWT, UserController.Demote);
-
-    // app.get('/User/SecureAreaJwt', cors(),
-    //     authMiddleware.requireJWT, UserController.SecureAreaJwt)
-    //
-    // app.get('/User/ManagerAreaJwt', cors(),
-    //     authMiddleware.requireJWT, UserController.ManagerAreaJwt)
-    //
-    // app.post('/User/PostAreaJwt', cors(),
-    //     authMiddleware.requireJWT, UserController.PostAreaJwt)
-
 };

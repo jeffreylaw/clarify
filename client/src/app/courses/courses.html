@@ -2,7 +2,7 @@
     <table class="table text-center" *ngFor="let course of _coursesArray">
         <tr>
             <td><a [routerLink]="['/courses', course.id]" routerLinkActive="active" class="course-title">{{course.code}} {{course.name}}</a><br>
-                Fall 2020 &bull; {{course.instructor}}
+                {{course.semester}} &bull; {{course.instructor}}
             </td>
         </tr>
     </table>

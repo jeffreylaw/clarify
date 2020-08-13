@@ -56,7 +56,6 @@ export class CreateQuestionComponent {
     }
 
     dataCallback(result, _this) {
-        console.log(result)
         if (result.question) {
             _this.clearCreateQuestionForm();
             _this.questionCreated.emit(result.question);

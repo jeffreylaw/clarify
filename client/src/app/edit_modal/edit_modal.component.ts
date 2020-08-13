@@ -30,7 +30,6 @@ export class EditModal {
     }
 
     updateQuestionCallback(result, _this) {
-        console.log(result)
         if (result.errorMessage === '') {
             _this.emitData.next({question: result.question});
             _this.activeModal.close()

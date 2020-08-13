@@ -6,7 +6,6 @@ class ReplyRepo {
 
     ReplyRepo() { }
 
-    
     async create(replyObj) {
         try {
             var error = await replyObj.validateSync();
@@ -39,6 +38,10 @@ class ReplyRepo {
         })
     }
 
+    async delete(id) {
+        let response = await Reply.deleteOne({ _id: id }).exec();
+        return response;
+    }
 }
 
 module.exports = ReplyRepo;

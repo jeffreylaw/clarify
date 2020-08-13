@@ -1,4 +1,6 @@
+<!-- This line is necessary for Github pages deployment due to the way SPA routing works on Github servers. Comment this out if you are not deploying to Github pages. -->
 <!-- {{updateContent()}} -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="custom-nav">
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">Clarify</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,7 +18,7 @@
             <li class="nav-item" *ngIf="!isLoggedIn && !token">
                 <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
             </li>
-            <li class="nav-item" *ngIf="token">
+            <li class="nav-item" *ngIf="isLoggedIn || token">
                 <a class="nav-link" routerLink="/logout" routerLinkActive="active" (click)="logout()">Logout ({{_username}})</a>
             </li>
         </ul>

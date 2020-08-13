@@ -57,58 +57,10 @@ export class QuestionsComponent {
         _this._questionsArray.sort((a, b) => {
             return new Date(b.date).valueOf() - new Date(a.date).valueOf();
         });
-        console.log(_this._questionsArray);
     }
 
     appendQuestion(question: any) {
         this._questionsArray.unshift(question);
-    }
-
-    deleteQuestion(id) {
-        if (window.confirm("Are you sure you want to delete this question and all associated replies?")) {
-            let data = {
-                questionID: id
-            }
-            console.log(data)
-            this._apiService.postData('Question/DeleteQuestion', data, this.deleteCallback);
-        }
-    }
-
-    deleteCallback(result, _this) {
-        if (result.errorMessage === '') {
-            _this.getQuestions();
-        }
-        if (result.errorMessage === 'You can only delete questions you authored.') {
-            _this._showCoverMessage = true;
-            _this._coverMessage = result.errorMessage;
-            setTimeout(() => {
-                _this._showCoverMessage = false;
-                _this._coverMessage = '';
-            }, 2000);
-        } else if (result.errorMessage) {
-            _this._showCoverMessage = true;
-            _this._coverMessage = result.errorMessage;
-            setTimeout(() => {
-                _this._showCoverMessage = false;
-                _this._coverMessage = '';
-            }, 2000);
-        }
-    }
-
-    deleteCourse(id) {
-        if (window.confirm("Are you sure you want to delete this course and all associated questions & replies?")) {
-            let data = {
-                courseID: id
-            }
-            this._apiService.postData('Course/DeleteCourse', data, this.deleteCourseCallback);
-        }
-    }
-
-    deleteCourseCallback(result, _this) {
-        console.log(result);
-        if (result.errorMessage === '') {
-            _this.router.navigate(['/']);
-        }
     }
 
     open(type, id) {
@@ -118,6 +70,11 @@ export class QuestionsComponent {
             modalRef.componentInstance.courseID = id;
         } else if (type === 'question') {
             modalRef.componentInstance.questionID = id;
+            modalRef.componentInstance.result.subscribe(($e) => {
+                if ($e.deleted) {
+                    this.getQuestions();
+                }
+            })
         }
     }
 
@@ -125,7 +82,6 @@ export class QuestionsComponent {
         const modalRef = this.modalService.open(EditModal, { size: 'xl' });
         modalRef.componentInstance.questionID = id;
         modalRef.componentInstance.emitData.subscribe(($e) => {
-            console.log('$e', $e.question);
             this.getQuestions();
         })
     }

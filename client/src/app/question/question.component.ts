@@ -47,13 +47,11 @@ export class QuestionComponent {
     }
 
     deleteCallback(result, _this) {
-        console.log(result)
         if (result.errorMessage === '') {
             if (result.response.nModified === 1) {
                 _this.getQuestion(_this._questionID);
             }
         } else if (result.errorMessage) {
-
             try {
                 let jsonResult = JSON.parse(result.errorMessage);
                 if (jsonResult.status === 401) {
@@ -66,7 +64,6 @@ export class QuestionComponent {
             }
         }
     }
-
 
     appendReply(reply: any) {
         this._repliesArray = this._repliesArray.concat(reply);

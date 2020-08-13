@@ -47,7 +47,6 @@ export class RegisterComponent {
     }    
 
     callback(result, _this) {
-        console.log(result)
         if (result.errorMessage === '') {
             _this.login();
         } else {
@@ -65,7 +64,6 @@ export class RegisterComponent {
             username: this._username,
             password: this._password,
         }).subscribe((data) => {
-            console.log(data);
             if (data['token'] != null) {
                 sessionStorage.setItem('auth_token', data['token']);
             }

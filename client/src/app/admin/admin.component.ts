@@ -12,7 +12,7 @@ export class AdminComponent {
     _code;
     _name;
     _instructor;
-    _crn;
+    _semester;
     _msg;
     _usersArray;
     _selectedUser;
@@ -44,13 +44,12 @@ export class AdminComponent {
             code: this._code,
             name: this._name,
             instructor: this._instructor,
-            crn: this._crn,
+            semester: this._semester,
         }
         this._apiService.postData('Course/CreateCourse', data, this.postCallback);
     }
 
     postCallback(result, _this) {
-        console.log(result);
         if (result.question) {
             _this.router.navigate(['/']);
         } else if (result.errorMessage) {
@@ -75,11 +74,9 @@ export class AdminComponent {
         const array = this._usersArray.filter(user => {
             return !user.roles.includes('admin');
         })
-        console.log(array)
         if (array.length === 0) {
             return;
         }
-        console.log('reached')
         if (!this._selectedUser || !this._selectedRole) {
             this._msg = 'Select an user and the role to promote them to.';
             this._showErrorMessage = true;
@@ -116,7 +113,6 @@ export class AdminComponent {
     }
 
     updateUserCallback(result, _this) {
-        console.log(result)
         if (result.response === "Successfully demoted user." || result.response === "Successfully promoted user.") {
             _this.getUsers();
             _this._selectedRole = null;
