@@ -38,6 +38,7 @@ export class AppComponent {
     ngOnInit() {
         this.router.events.subscribe(event => {
             console.log('ever run')
+            console.log('auth', this.auth.isLoggedIn);
             if (event.constructor.name === 'NavigationEnd' || event.constructor.name === 'NavigationStart') {
                 console.log('okay budy...')
                 this.isLoggedIn = this.auth.isLoggedIn;

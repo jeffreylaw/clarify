@@ -49,6 +49,7 @@ export class LoginComponent {
                 this.auth.isLoggedIn = true;
                 this.router.navigate(['/']);
             }
+            console.log('auth', this.auth.isLoggedIn);
         },
         error => {
             this._msg = 'Could not login, please try again.'
