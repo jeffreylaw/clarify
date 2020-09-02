@@ -1,27 +1,47 @@
 <!-- This line is necessary for Github pages deployment due to the way SPA routing works on Github servers. Comment this out if you are not deploying to Github pages. -->
 <!-- {{updateContent()}} -->
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="custom-nav">
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">Clarify</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" *ngIf="_roles && _roles.includes('admin')">
-                <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Panel</a>
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="openChat = false;">Admin Panel</a>
             </li>
             <li class="nav-item" *ngIf="!isLoggedIn && !token">
-                <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+                <a class="nav-link" routerLink="/register" routerLinkActive="active" (click)="openChat = false;">Register</a>
             </li>
             <li class="nav-item" *ngIf="!isLoggedIn && !token">
-                <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+                <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="openChat = false;">Login</a>
             </li>
             <li class="nav-item" *ngIf="isLoggedIn || token">
-                <a class="nav-link" routerLink="/logout" routerLinkActive="active" (click)="logout()">Logout ({{_username}})</a>
+                <a class="nav-link" routerLink="/logout" routerLinkActive="active" (click)="logout(); openChat = false;">Logout
+                    ({{_username}})</a>
             </li>
         </ul>
     </div>
 </nav>
+<div id="chatroom" *ngIf="openChat">
+    <h5>Chatroom</h5>
+    <div>
+        <div *ngFor="let reply of chatReplies" id="chat-replies-div">
+            <p class="userMessage"  *ngIf="reply.username === _username">
+                {{reply.message}}
+            </p>
+            <p class="otherMessage" *ngIf="reply.username !== _username">
+                {{reply.message}}
+            </p>
+            <span class="username-span" [ngStyle]="{'text-align': reply.username === _username ? 'right' : 'left'}">{{reply.username}}</span>
+        </div>
+    </div>
+    <textarea id="textbox" rows="3" placeholder="Type a message here..." [(ngModel)]="chatReply" (keyup.enter)="sendMessage()"></textarea>
+    <input type="button" value="Send" class="send-button" (click)="sendMessage()" *ngIf="_username">
+    <input type="button" value="Please login to chat" class="send-button" disabled *ngIf="!_username">
+</div>
+<img src="../assets/speech-bubble.svg" id="chatroom-button" *ngIf="!openChat" (click)="toggleChatroom()">
+<img src="../assets/close.svg" id="chatroom-button" *ngIf="openChat" (click)="toggleChatroom()">
 <router-outlet></router-outlet>

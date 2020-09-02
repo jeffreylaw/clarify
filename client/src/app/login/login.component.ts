@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { RouteEventsService } from '../route-events.service';
 import { AuthService } from '../AuthService';
-const BASE_URL = 'http://localhost:1337/';
+// const BASE_URL = 'http://localhost:1337/';
 
 @Component({
     templateUrl: './login.html',
@@ -24,7 +24,8 @@ export class LoginComponent {
             this.clearMsg();
             return;
         }
-        let url = BASE_URL + 'auth';
+        // let url = BASE_URL + 'auth';
+        let url = '/api/auth';
         this.http.post(url, {
             username: this._username.trim(),
             password: this._password.trim(),
@@ -39,13 +40,13 @@ export class LoginComponent {
             let replyRoute = /^\/courses\/question\/\w*/
             let questionRoute = /^\/courses\/w*/
             if (replyRoute.test(this.routeEventsService.previousRoutePath.value)) {
-                this.auth.isLoggedIn = true;
+                this.auth.setValue(true);
                 this.router.navigate([this.routeEventsService.previousRoutePath.value]);
             } else if (questionRoute.test(this.routeEventsService.previousRoutePath.value)) {
-                this.auth.isLoggedIn = true;
+                this.auth.setValue(true);
                 this.router.navigate([this.routeEventsService.previousRoutePath.value]);
             } else {
-                this.auth.isLoggedIn = true;
+                this.auth.setValue(true);
                 this.router.navigate(['/']);
             }
         },

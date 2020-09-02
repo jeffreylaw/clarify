@@ -4,8 +4,6 @@ import { ApiService } from '../ApiService';
 import { Router } from '@angular/router';
 import { AuthService } from '../AuthService';
 
-const BASE_URL = "http://localhost:1337/";
-
 @Component({
     templateUrl: './register.html',
     styleUrls: ['./register.css']
@@ -58,7 +56,7 @@ export class RegisterComponent {
     }
 
     login() {
-        let url = BASE_URL + 'auth';
+        let url = '/api/auth';
 
         this.http.post(url, {
             username: this._username,
@@ -71,7 +69,7 @@ export class RegisterComponent {
                 sessionStorage.setItem('username', JSON.stringify(data["user"].username))
                 sessionStorage.setItem('roles', JSON.stringify(data['user'].roles))
             }
-            this.auth.isLoggedIn = true;
+            this.auth.setValue(true);
             this.router.navigate(['/']);
         },
         error => {

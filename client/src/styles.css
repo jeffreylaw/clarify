@@ -2,9 +2,9 @@
 @import '~animate.css/animate.min';
 
 html, body {
-    min-height: 100vh;
-    height: auto;
+    max-height: 95vh;
+    /* height: auto; */
 }
 .navbar {
-    min-height: 5vh;
+    height: 5vh;
 }

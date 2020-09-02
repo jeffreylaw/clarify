@@ -10,18 +10,12 @@ exports.AllUsers = async function (req, res) {
     if (reqInfo.rolePermitted) {
         let users = await _userRepo.allUsers();
         if (users) {
-            res.json({ users: users });
+            return res.json({ users: users });
         } else {
-            res.json({ users: [] });
+            return res.json({ users: [] });
         }
     }
 }
-
-/* Register a user */
-exports.Register = async function (req, res) {
-    let reqInfo = RequestService.reqHelper(req);
-    res.render('User/Register', { errorMessage: "", user: {}, reqInfo: reqInfo })
-};
 
 /* Handles 'POST' with registration form submission. */
 exports.RegisterUser = async function (req, res) {

@@ -4,7 +4,7 @@ import { ApiService } from '../ApiService';
 import { Router } from '@angular/router';
 
 @Component({
-    templateUrl:'./courses.html',
+    templateUrl: './courses.html',
     styleUrls: ['./courses.css']
 })
 export class CoursesComponent {

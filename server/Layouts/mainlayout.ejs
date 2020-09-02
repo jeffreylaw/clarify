@@ -1,28 +1,34 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--</head>-->
-<!--<body>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
 
-<!--<main role="main" class="container">-->
-<!--    <div class="starter-template">-->
-<!--        <a href='/Question/Index'>Question</a> |-->
-<!--        <a href='/Question/Create'>Create Q</a> |-->
-<!--        <a href='/User/Register'>Register</a> | -->
+<main role="main" class="container">
+    <div class="starter-template">
+        <a href='/Question/Index'>Questions</a> |
+        <a href='/Question/Create'>Create</a> |
+        <a href='/User/Register'>Register</a> | 
 
-<!--        &lt;!&ndash; Show 'Logout' and user name if authenticated. &ndash;&gt;-->
-<!--        <%if (reqInfo.authenticated) { %>-->
-<!--          <a href='/User/Logout'>Logout</a> [<%= reqInfo.username %>]-->
+        <!-- Show 'Logout' and user name if authenticated. -->
+        <%if (reqInfo.authenticated) { %>
 
-<!--        &lt;!&ndash; 'else' must be in separate section with curly brackets to work. &ndash;&gt;-->
-<!--        <% } else { %>-->
-<!--          <a href='/User/Login'>Login</a>-->
-<!--        <% } %>-->
+          <% if (reqInfo.roles.includes("Admin")
+          ||  reqInfo.roles.includes("Manager"))
+            { %>
+            <a href='/User/ManagerArea'>Manager Area</a> | 
+          <% } %>
+          <a href='/User/Logout'>Logout</a> [<%= reqInfo.username %>]
 
-<!--        &lt;!&ndash; Child view goes here. &ndash;&gt;-->
-<!--        <%- body %>-->
-<!--    </div>-->
-<!--</main>-->
+        <!-- 'else' must be in separate section with curly brackets to work. -->
+        <% } else { %>
+          <a href='/User/Login'>Login</a>
+        <% } %>
 
-<!--</body>-->
-<!--</html>-->
+        <!-- Child view goes here. -->
+        <%- body %>
+    </div>
+</main>
+
+</body>
+</html>
