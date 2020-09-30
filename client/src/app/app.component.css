@@ -1,10 +1,12 @@
 #custom-nav {
     box-shadow: 0 1px 5px rgba(0, 0, 0, .15);
     background-color: #478dc6 !important;
+    min-height: 5vh;
+    z-index: 101;
 }
 
 #chatroom-button {
-    position: absolute;
+    position: fixed;
     bottom: 8px;
     right: 8px;
     height: 32px;
@@ -14,9 +16,9 @@
 #chatroom {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    right: 6vh;
-    bottom: 6vh;
+    position: fixed;
+    right: 12px;
+    bottom: 46px;
     width: 40vw;
     border-radius: 6px;
     background-color: #FEFEFE;

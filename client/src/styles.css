@@ -1,10 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~animate.css/animate.min';
 
-html, body {
+/* html, body {
     max-height: 95vh;
-    /* height: auto; */
-}
+} */
 .navbar {
-    height: 5vh;
+    min-height: 5vh;
 }
